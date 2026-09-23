@@ -519,3 +519,6 @@ Once the VPN was up, I switched the endpoint to **New Zealand**, rebooted the Wa
 
 **Boom.** The **New Zealand counter on the map went from 1 to 2.** 🎉
 
+<p align="center">
+  <img src="images/t77.jpg" alt="Boot" width="55%">
+</p>
