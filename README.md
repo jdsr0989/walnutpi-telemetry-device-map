@@ -615,7 +615,6 @@ So the answer to the original question — *"Why doesn't my Walnut Pi register i
 
 That said, it's worth being fair to the developers: **we don't actually know if this is a design choice or a bug.** The Walnut Pi project is primarily aimed at the **Chinese market**, and it's possible that:
 
-- Counting devices by **continent** (rather than by country) was a deliberate simplification.
 - **LATAM IPs aren't a priority** for their geolocation database, so they fall back to the nearest major region — the USA.
 - Or it's simply a **bug** in their IP-to-country lookup that nobody has noticed yet.
 
