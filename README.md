@@ -416,3 +416,106 @@ Looking at the flow, the backend most likely does the following:
    - `/time_rank` — ranking by uptime
 7. **Serves the aggregated data** to `map.walnutpi.com`, which renders the walnut icons on the world map.
 
+
+---
+
+### ❓ The Problem: Why Doesn't My Walnut Pi Register in Mexico?
+
+At this point, there are two main hypotheses:
+
+1. **The backend isn't receiving the client data correctly** — the JSON payload gets lost or malformed along the way.
+2. **The geolocation step is wrong** — boards with Mexican IPs are not being counted in the correct country (probably bucketed into the USA zone).
+
+To confirm or rule out the first hypothesis, I decided to **set up a VPN** and re-route the telemetry traffic through a different country. If the board showed up in the new country, the client was fine — and the problem was definitely on the **geolocation** side.
+
+### 🛡️ Setting Up a VPN on the Walnut Pi
+
+I chose **Mullvad VPN** with **WireGuard**, since it's fast, lightweight, and easy to configure.
+
+Because the Walnut Pi kernel is **modified by the manufacturer**, using the standard kernel WireGuard module wasn't straightforward — so I went with the **Go userspace implementation** (`wireguard-go`), which works independently of the kernel.
+
+Installation was simple:
+
+```bash
+apt update && apt install wireguard-tools golang -y
+go install golang.zx2c4.com/wireguard@latest
+apt install wireguard-go -y
+```
+
+### 📝 WireGuard Config
+
+Here's the Mullvad WireGuard config:
+
+```ini
+root@WalnutPi:~# cat /etc/wireguard/mex.conf
+[Interface]
+# Device: Witty Bull
+PrivateKey = XXXXXXX
+Address = XXXX/32
+DNS = XXXXX
+
+[Peer]
+PublicKey = XXXXX
+AllowedIPs = 0.0.0.0/0
+Endpoint = XXXX:51820
+```
+
+### ⚙️ Startup Script
+
+Since `wireguard-go` runs in userspace, I had to write a small helper script to bring up the interface, assign the IP, set the MTU, and route everything through the tunnel:
+
+```bash
+root@WalnutPi:~# cat /root/start-vpn.sh
+#!/bin/bash
+sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null
+sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null
+wireguard-go mex &
+sleep 1
+grep -vE '^(Address|DNS)' /etc/wireguard/mex.conf > /tmp/mex_clean.conf
+wg setconf mex /tmp/mex_clean.conf
+ip address add XXXXX/32 dev mex 2>/dev/null || true
+ip link set mtu 1420 up dev mex
+GATEWAY=$(ip route show default | awk 'NR==1 {print $3}')
+ip route add XXXXXX via $GATEWAY 2>/dev/null || true
+ip route add default dev mex 2>/dev/null || ip route replace default dev mex
+echo "nameserver XXXXX" > /etc/resolv.conf
+echo "¡VPN iniciada correctamente!"
+```
+
+### 🔄 Systemd Service
+
+To make the VPN start automatically on boot, I wrapped the script into a systemd service:
+
+```ini
+root@WalnutPi:~# cat /etc/systemd/system/wireguard-mex.service
+[Unit]
+Description=WireGuard VPN (mex) via userspace
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/root/start-vpn.sh
+ExecStop=/ip link delete mex
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then enabled it:
+
+```bash
+systemctl daemon-reload
+systemctl enable wireguard-mex.service
+systemctl start wireguard-mex.service
+systemctl status wireguard-mex.service
+```
+
+### 🧪 The Experiment: Switching to New Zealand
+
+Once the VPN was up, I switched the endpoint to **New Zealand**, rebooted the Walnut Pi, and waited a few minutes.
+
+**Boom.** The **New Zealand counter on the map went from 1 to 2.** 🎉
+
