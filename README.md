@@ -522,3 +522,57 @@ Once the VPN was up, I switched the endpoint to **New Zealand**, rebooted the Wa
 <p align="center">
   <img src="images/t77.jpg" alt="Boot" width="55%">
 </p>
+
+### 🇲🇽 The Mexico Test: Are Mexican Boards Being Counted as USA?
+
+With the VPN experiment as proof that the map marker follows the **public IP** of the board, the next question is obvious:
+
+> **What happens with Mexico?** Are Mexican Walnut Pi boards being silently counted in the **USA** zone?
+
+To confirm this, I wrote a small **Bash script** that polls the Walnut Pi map API every **30 seconds** and extracts the **USA count** using a **bounding box** for the continental United States:
+
+- Latitude: `24` to `50`
+- Longitude: `-125` to `-66`
+
+Here's the script:
+
+```bash
+#!/bin/bash
+
+API_URL="https://api.walnutpi.com/data"
+INTERVAL=30
+prev_usa=0
+
+while true; do
+    now=$(date '+%Y-%m-%d %H:%M:%S')
+    data=$(curl -s "$API_URL")
+
+    usa=$(jq '[.[] | select(
+        .lat >= 24 and .lat <= 50 and
+        .lng >= -125 and .lng <= -66
+    ) | .count] | add // 0' <<< "$data")
+
+    printf '%s  USA=%s\n' "$now" "$usa"
+
+    if [ "$prev_usa" -ne 0 ] && [ "$usa" -gt "$prev_usa" ]; then
+        echo "[$now] >>> USA: $prev_usa -> $usa"
+    fi
+
+    prev_usa=$usa
+    sleep "$INTERVAL"
+done
+```
+
+### 🔍 What the Script Does
+
+1. **Fetches the live data** from `https://api.walnutpi.com/data` — the same endpoint that `map.walnutpi.com` uses to render the map.
+2. **Filters all entries** whose `lat`/`lng` fall inside the continental USA bounding box.
+3. **Sums up the counts** and prints the total, with a timestamp.
+4. **Alerts** whenever the USA count increases compared to the previous poll.
+
+### 🧪 The Experiment
+
+With the script running, I booted up **my two Walnut Pi boards** — both connected from **Mexico**, both without any VPN.
+
+And then I waited. 👀
+
