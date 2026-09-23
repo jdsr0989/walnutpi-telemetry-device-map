@@ -125,13 +125,6 @@ root@WalnutPi:~# wpi-update
 root@WalnutPi:~#
 ```
 
-### 📦 APT Sources
-
-```bash
-root@WalnutPi:~# cat /etc/apt/sources.list
-deb http://mirrors.tuna.tsinghua.edu.cn/debian bookworm main
-```
-
 ---
 
 ## 🗺️ Device Map
