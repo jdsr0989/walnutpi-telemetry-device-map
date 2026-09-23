@@ -89,6 +89,10 @@ And that's it — the next step is booting up. 🚀
 
 ## 🚀 First Boot
 
+<p align="center">
+  <img src="images/t44.jpg" alt="Boot" width="55%">
+</p>
+
 The Walnut Pi booted up without issues. I configured the WiFi network as instructed in the wiki:
 
 ```bash
