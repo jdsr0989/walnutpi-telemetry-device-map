@@ -603,7 +603,7 @@ After some minutes the USA counter ticked up:
 **The counter went from 3 to 4** — after booting up my Mexican Walnut Pi board. 🇲🇽➡️🇺🇸
 
 
-### ✅ Conclusion
+### Conclusion
 
 - **Boards with Mexican public IPs are being counted as USA devices** on the Device Map.
 - The **client is innocent** — it sends the data correctly (as proven by the VPN test).
