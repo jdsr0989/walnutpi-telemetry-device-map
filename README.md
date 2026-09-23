@@ -30,7 +30,7 @@ Alright, time to get to work. From the official wiki — [https://wiki.walnutpi.
 
 There's a dedicated section for **users outside of China**, but I was curious and wanted to try the procedure for downloading directly from **Baidu** (the "Chinese Google").
 
-To my surprise, **my Mexican phone number was accepted** for registration — no region blocks, no workarounds needed. 🎉
+To my surprise, **my Mexican phone number was accepted** for registration — no region blocks, no workarounds needed. 
 
 After that, I installed the **Baidu Netdisk client** on my **Arch Linux** machine, and from there I downloaded the images. The transfer took **longer than expected**, but it completed without any issues.
 
@@ -92,7 +92,7 @@ root@WalnutPi:~#
 
 This is a really nice feature on the Walnut Pi boards. It places a **walnut icon on your country** on a world map, and also tracks the **uptime** of your device. I was really excited to see my board appear in **Mexico**… however, it seems the backend is **geoblocked**, and all devices from Mexico get grouped into the **USA** zone. 😞
 
-But let's rewind a bit and try to understand how this neat feature actually works. 🙂
+But let's rewind a bit and try to understand how this neat feature actually works. 
 
 ### 🔧 The Telemetry Service
 
