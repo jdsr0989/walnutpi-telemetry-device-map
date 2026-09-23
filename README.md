@@ -135,7 +135,7 @@ But let's rewind a bit and try to understand how this neat feature actually work
 
 ### 🔧 The Telemetry Service
 
-The service that sends telemetry data to paint the map is called `map_device`. Let's check its status:
+The service that sends telemetry data to paint the map is called `map_device`. is running by default as documented:
 
 ```bash
 root@WalnutPi:~# systemctl status map_device
