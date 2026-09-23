@@ -520,7 +520,7 @@ Once the VPN was up, I switched the endpoint to **New Zealand**, rebooted the Wa
 **Boom.** The **New Zealand counter on the map went from 1 to 2.** 🎉
 
 <p align="center">
-  <img src="images/t77.jpg" alt="Boot" width="55%">
+  <img src="images/t77.jpg" alt="vpn" width="55%">
 </p>
 
 ### 🇲🇽 The Mexico Test: Are Mexican Boards Being Counted as USA?
@@ -602,12 +602,38 @@ After some minutes the USA counter ticked up:
 
 **The counter went from 3 to 4** — after booting up my Mexican Walnut Pi board. 🇲🇽➡️🇺🇸
 
+### 🔄 The Reverse Test: Turning the Board Off
+
+To be extra thorough, I ran the **inverse experiment**: I powered off my Walnut Pi and kept the monitoring script running.
+
+After some time, the USA counter **dropped back from 4 to 3**.
+
+```
+2026-09-23 16:41:19  USA=4
+2026-09-23 16:41:49  USA=4
+2026-09-23 16:42:21  USA=4
+2026-09-23 16:42:51  USA=4
+2026-09-23 16:43:22  USA=4
+2026-09-23 16:43:53  USA=4
+2026-09-23 16:44:24  USA=4
+2026-09-23 16:44:55  USA=3
+2026-09-23 16:45:26  USA=3
+2026-09-23 16:45:57  USA=3
+2026-09-23 16:46:28  USA=3
+```
+This is a **second, independent confirmation** of the whole theory:
+
+1. **Board ON** → USA counter goes **up** (3 → 4)
+2. **Board OFF** → USA counter goes **down** (4 → 3)
+
 
 ### Conclusion
 
 - **Boards with Mexican public IPs are being counted as USA devices** on the Device Map.
 - The **client is innocent** — it sends the data correctly (as proven by the VPN test).
 - The **backend geolocation layer is the culprit** — its IP-to-country database resolves Mexican IPs to US coordinates.
+
+Something else I noticed during this test: the **refresh timing is not fixed**. Sometimes the counter took **a couple of minutes** to update, sometimes it felt almost immediate, and sometimes it lagged noticeably.
 
 So the answer to the original question — *"Why doesn't my Walnut Pi register in Mexico?"* — is:
 
