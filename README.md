@@ -1,10 +1,10 @@
-# 🥜 Walnut Pi — My Experience Testing Chinese Raspberry Pi Alternatives
+# 🥜 Walnut Pi — Device Map Telemetry
 
 ---
 
 ## 📖 Introduction
 
-While browsing **AliExpress** in search of affordable Chinese alternatives to the Raspberry Pi, I stumbled upon the **Walnut Pi** family. They caught my attention immediately: they were **cheaper** than a Raspberry Pi and, on paper, offered some **very interesting specs**.
+While looking for Chinese alternatives to the Raspberry Pi, I stumbled upon the **Walnut Pi** family. They caught my attention immediately: they were **cheaper** than a Raspberry Pi and, on paper, offered some **very interesting specs** — but I especially **loved the Device Map feature** documented on the project's page.
 
 So I decided to buy **two models** to test them hands-on:
 
@@ -124,130 +124,6 @@ root@WalnutPi:~# cat /etc/apt/sources.list
 deb http://mirrors.tuna.tsinghua.edu.cn/debian bookworm main
 ```
 
-### 🧠 Memory Info
-
-```bash
-root@WalnutPi:~# free -h
-               total        used        free      shared  buff/cache   available
-Mem:           1.9Gi       152Mi       1.6Gi       1.7Mi       225Mi       1.8Gi
-Swap:             0B          0B          0B
-```
-
-### ⚙️ CPU Info
-
-```bash
-root@WalnutPi:~# cat /proc/cpuinfo
-processor	: 0
-BogoMIPS	: 48.00
-Features	: fp asimd aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm lrcpc dcpop asimddp
-CPU implementer	: 0x41
-CPU architecture: 8
-CPU variant	: 0x2
-CPU part	: 0xd05
-CPU revision	: 0
-
-processor	: 1
-... (same for processors 1 through 7)
-```
-
-> **Note:** The system reports **8 CPU cores** (Cortex-A55, part `0xd05`), confirming the octa-core Allwinner T527.
-
-### 🔊 Audio Devices
-
-```bash
-root@WalnutPi:~# aplay -l
-**** List of PLAYBACK Hardware Devices ****
-card 0: audiocodec [audiocodec], device 0: sunxi-snd-plat-aaudio-sunxi-snd-codec 7110000.codec-0 []
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 1: ahubhdmi [ahubhdmi], device 0: sunxi-snd-plat-i2s-sunxi-snd-codec-hdmi soc@3000000:hdmi_codec- []
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-```
-
-Two playback devices are available: the onboard **analog audio codec** (`card 0`) and **HDMI audio** (`card 1`).
-
-### 📡 IR Receiver
-
-```bash
-root@WalnutPi:~# ir-keytable
-Found /sys/class/rc/rc0/ with:
-	Name: sunxi_ir_recv
-	Driver: sunxi-rc-recv
-	Default keymap: rc_map_sunxi
-	Input device: /dev/input/event1
-	LIRC device: /dev/lirc0
-	Attached BPF protocols: Operation not supported
-	Supported kernel protocols: lirc nec 
-	Enabled kernel protocols: lirc nec 
-	bus: 25, vendor/product: 0001:0001, version: 0x0100
-	Repeat delay = 500 ms, repeat period = 125 ms
-```
-
-The onboard **IR receiver** is detected and ready to use, with support for **NEC** and **LIRC** protocols.
-
-### 🔵 Bluetooth
-
-```bash
-root@WalnutPi:~# hciconfig -a
-hci0:	Type: BR/EDR  Bus: UART
-	BD Address: 27:36:D2:73:7B:E0  ACL MTU: 1021:9  SCO MTU: 255:4
-	UP RUNNING 
-	RX bytes:811 acl:0 sco:0 events:56 errors:0
-	TX bytes:2758 acl:0 sco:0 commands:56 errors:0
-	Features: 0xbf 0x2e 0x4d 0xfe 0xd8 0x3f 0x7b 0x87
-	Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV3 
-	Link policy: RSWITCH SNIFF 
-	Link mode: SLAVE ACCEPT 
-	Name: 'WalnutPi'
-	Class: 0x000000
-	Service Classes: Unspecified
-	Device Class: Miscellaneous, 
-	HCI Version:  (0xd)  Revision: 0xb
-	LMP Version:  (0xd)  Subversion: 0xb
-	Manufacturer: not assigned (2875)
-```
-
-Bluetooth is **up and running** (`UP RUNNING`), with the adapter named `WalnutPi`. Supports BR/EDR over UART.
-
-### 🔌 GPIO Pinout
-
-```bash
-root@WalnutPi:~# gpio pins
-+---+-----------+------+----------+------+-----------+---+
-| V |    Mode   | Name | Physical | Name |    Mode   | V |
-+---+-----------+------+----------+------+-----------+---+
-|   |           | 3.3v |  1 || 2  |   5v |           |   |
-|   |  I2C1_SDA |  PB5 |  3 || 4  |   5v |           |   |
-|   |  I2C1_SCL |  PB4 |  5 || 6  |  GND |           |   |
-|   |       OFF |  PB6 |  7 || 8  |  PB0 | UART2_TX  |   |
-|   |           |  GND |  9 || 10 |  PB1 | UART2_RX  |   |
-|   |       OFF | PB13 | 11 || 12 | PB14 | OFF       |   |
-|   |       OFF | PI12 | 13 || 14 |  GND |           |   |
-|   |       OFF | PI11 | 15 || 16 | PI10 | OFF       |   |
-|   |           | 3.3v | 17 || 18 |  PI9 | OFF       |   |
-|   | SPI1_MOSI |  PI4 | 19 || 20 |  GND |           |   |
-|   | SPI1_MISO |  PI5 | 21 || 22 |  PI7 | OFF       |   |
-|   |  SPI1_CLK |  PI3 | 23 || 24 |  PI2 | SPI1_CS0  |   |
-|   |           |  GND | 25 || 26 |  PI6 | SPI1_CS1  | 1 |
-|   |  I2C2_SDA | PI16 | 27 || 28 | PI15 | I2C2_SCL  |   |
-|   |       OFF |  PL6 | 29 || 30 |  GND |           |   |
-|   |       OFF |  PL5 | 31 || 32 | PI14 | OFF       |   |
-|   |       OFF |  PL4 | 33 || 34 |  GND |           |   |
-|   |       OFF |  PL2 | 35 || 36 | PI13 | OFF       |   |
-|   |       OFF |  PL3 | 37 || 38 |  PI0 | OFF       |   |
-|   |           |  GND | 39 || 40 |  PI1 | OFF       |   |
-+---+-----------+------+----------+------+-----------+---+
-
-+---+-----------+------+----------+------+-----------+---+
-| V |    Mode   | Name | Physical | Name |    Mode   | V |
-+---+-----------+------+----------+------+-----------+---+
-| 1 |        IN |  KEY | 41 || 42 |  LED | OUT       | 1 |
-+---+-----------+------+----------+------+-----------+---+
-```
-
-The GPIO header is fully **Raspberry Pi-compatible**, with I2C, SPI, UART, and power pins mapped the same way. There's also an extra header (pins 41–42) for the onboard **KEY button** and **LED**, both programmable.
-
 ---
 
 ## 🗺️ Device Map
@@ -286,7 +162,7 @@ root@WalnutPi:~# /usr/lib/walnutpi/service/map_device
 Sent: {"chip_platform": "H618", "chip_id": "33802000ac00480801081365308f24d2", "os_version": "2.6.0", "os_type": "server"}
 ```
 
-With this, the backend generates the metrics — and I assume it also grabs the **public IP** and geolocates it on the server side. 
+With this, the backend generates the metrics — and I assume it also grabs the **public IP** and geolocates it on the server side.
 
 ### 🔍 Deeper Analysis of the Flow
 
@@ -321,7 +197,6 @@ map_device
                               │
                               └── sleep(300)
 ```
-
 
 Although the client is a Python binary that was converted into an executable (so the code can't be read directly), I was able to **recreate its functionality almost entirely**. Here's what it does:
 
@@ -515,3 +390,7 @@ try:
 except KeyboardInterrupt:
     print('Stopped by the user.')
 ```
+
+---
+
+</p>
