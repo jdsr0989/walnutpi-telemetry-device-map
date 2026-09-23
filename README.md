@@ -394,4 +394,64 @@ except KeyboardInterrupt:
 
 ---
 
-</p>
+## 🌐 Imagining How the Backend Works
+
+With the information we have — the client code, the service behavior, the JSON payload, and a network capture — we can reverse-engineer what the Chinese backend does and how it generates the map.
+
+The flow would look like this:
+
+```
+wpi_client.pyc
+     │
+     │ TCP :10240
+     │
+     ▼
+106.52.98.85
+     │
+     │ storage / processing
+     ▼
+api.walnutpi.com
+     ├── /data
+     ├── /city_rank
+     └── /time_rank
+          │
+          ▼
+     map.walnutpi.com
+```
+
+### 📡 Network Capture (Wireshark / tcpdump)
+
+Here's the actual packet capture showing the client sending its telemetry to `106.52.98.85:10240`:
+
+```
+18:08:15.189967 IP 192.168.0.24.33380 > 106.52.98.85.10240: Flags [S], seq 2399582240, win 64240, options [mss 1460,sackOK,TS val 3857131722 ecr 0,nop,wscale 7], length 0
+18:08:15.422450 IP 106.52.98.85.10240 > 192.168.0.24.33380: Flags [S.], seq 2966755180, ack 2399582241, win 65160, options [mss 1424,sackOK,TS val 1694501674 ecr 3857131722,nop,wscale 7], length 0
+18:08:15.422541 IP 192.168.0.24.33380 > 106.52.98.85.10240: Flags [.], ack 1, win 502, options [nop,nop,TS val 3857131955 ecr 1694501674], length 0
+18:08:15.422676 IP 192.168.0.24.33380 > 106.52.98.85.10240: Flags [P.], seq 1:117, ack 1, win 502, options [nop,nop,TS val 3857131955 ecr 1694501674], length 116
+18:08:15.422875 IP 192.168.0.24.33380 > 106.52.98.85.10240: Flags [F.], seq 117, ack 1, win 502, options [nop,nop,TS val 3857131955 ecr 1694501674], length 0
+18:08:15.651445 IP 106.52.98.85.10240 > 192.168.0.24.33380: Flags [.], ack 117, win 509, options [nop,nop,TS val 1694501908 ecr 3857131955], length 0
+18:08:15.699267 IP 106.52.98.85.10240 > 192.168.0.24.33380: Flags [.], ack 118, win 509, options [nop,nop,TS val 1694501957 ecr 3857131955], length 0
+18:08:16.737337 IP 106.52.98.85.10240 > 192.168.0.24.33380: Flags [F.], seq 1, ack 118, win 509, options [nop,nop,TS val 1694502904 ecr 3857131955], length 0
+18:08:16.737391 IP 192.168.0.24.33380 > 106.52.98.85.10240: Flags [.], ack 2, win 502, options [nop,nop,TS val 3857133270 ecr 1694502904], length 0
+```
+
+And the decoded payload (the JSON we already know):
+
+```
+{"chip_platform": "H618", "chip_id": "33802000ac00480801081365308f24d2", "os_version": "2.6.0", "os_type": "server"}
+```
+
+### 🧩 Decoding the Server-Side Logic
+
+Looking at the flow, the backend most likely does the following:
+
+1. **Accepts the TCP connection** on port `10240`.
+2. **Parses the JSON payload** to extract `chip_platform`, `chip_id`, `os_version`, and `os_type`.
+3. **Logs the source IP** of the connection (which is the **public IP** of the client, as seen by the server).
+4. **Geolocates the IP** using an IP-to-country/city database.
+5. **Stores the record** in a database (probably tied to `/data` on `api.walnutpi.com`).
+6. **Aggregates the data** into rankings:
+   - `/city_rank` — ranking by city
+   - `/time_rank` — ranking by uptime
+7. **Serves the aggregated data** to `map.walnutpi.com`, which renders the walnut icons on the world map.
+
