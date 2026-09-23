@@ -35,8 +35,7 @@ So I decided to buy **two models** to test them hands-on:
 | **Peripherals** | USB 2.0 ×3 · IR ×1 · Button ×1 · LED ×1 · 40-pin GPIO (RPi-compatible) · 3-pin UART debug header |
 | **Power** | USB Type-C, 5V/1A |
 | **Operating Systems** | Walnut Pi OS (Debian) · Ubuntu 22.04 · Home Assistant · Android |
-| **Dimensions** | 85 × 56 × 21 mm (PCB) |
-| **Weight** | 38g (bare board) |
+
 
 ---
 
