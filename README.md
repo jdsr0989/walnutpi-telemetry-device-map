@@ -645,3 +645,7 @@ That said, it's worth being fair to the developers: **we don't actually know if 
 - Or it's simply a **bug** in their IP-to-country lookup that nobody has noticed yet.
 
 Either way, the outcome for a Mexican user is the same: their board shows up in the wrong country. But whether it's a **feature** or a **flaw**, only the Walnut Pi team can say.
+
+I opened an issue on the official Walnut Pi GitHub repository:
+
+> 🔗 **[WalnutPi 1B does not appear on the device map after successful registration — Issue #15](https://github.com/walnutpi/walnutpi-build/issues/15)**
