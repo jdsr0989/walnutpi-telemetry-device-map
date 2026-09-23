@@ -600,5 +600,5 @@ After a few minutes — **many, actually** — the USA counter ticked up:
 
 ### 🎯 Result
 
-**The counter went from 3 to 4** — right after booting up my Mexican Walnut Pi board. 🇲🇽➡️🇺🇸
+**The counter went from 3 to 4** — after booting up my Mexican Walnut Pi board. 🇲🇽➡️🇺🇸
 
