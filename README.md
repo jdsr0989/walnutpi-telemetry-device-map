@@ -71,4 +71,10 @@ To my surprise, **my Mexican phone number was accepted** for registration — no
 
 After that, I installed the **Baidu Netdisk client** on my **Arch Linux** machine, and from there I downloaded the images. The transfer took **longer than expected**, but it completed without any issues.
 
+
+<p align="center">
+  <img src="images/t33.jpg" alt="Baidu Netdisk Download" width="65%">
+</p>
+
+
 ---
