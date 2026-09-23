@@ -602,3 +602,21 @@ After a few minutes — **many, actually** — the USA counter ticked up:
 
 **The counter went from 3 to 4** — after booting up my Mexican Walnut Pi board. 🇲🇽➡️🇺🇸
 
+
+### ✅ Conclusion
+
+- **Boards with Mexican public IPs are being counted as USA devices** on the Device Map.
+- The **client is innocent** — it sends the data correctly (as proven by the VPN test).
+- The **backend geolocation layer is the culprit** — its IP-to-country database resolves Mexican IPs to US coordinates.
+
+So the answer to the original question — *"Why doesn't my Walnut Pi register in Mexico?"* — is:
+
+> **The client works, the network works, and the payload arrives intact. But the backend's geolocation database doesn't know where Mexico is.** 
+
+That said, it's worth being fair to the developers: **we don't actually know if this is a design choice or a bug.** The Walnut Pi project is primarily aimed at the **Chinese market**, and it's possible that:
+
+- Counting devices by **continent** (rather than by country) was a deliberate simplification.
+- **LATAM IPs aren't a priority** for their geolocation database, so they fall back to the nearest major region — the USA.
+- Or it's simply a **bug** in their IP-to-country lookup that nobody has noticed yet.
+
+Either way, the outcome for a Mexican user is the same: their board shows up in the wrong country. But whether it's a **feature** or a **flaw**, only the Walnut Pi team can say.
