@@ -6,6 +6,10 @@
 
 While looking for Chinese alternatives to the Raspberry Pi, I stumbled upon the **Walnut Pi** family. They caught my attention immediately: they were **cheaper** than a Raspberry Pi and, on paper, offered some **very interesting specs** — but I especially **loved the Device Map feature** documented on the project's page.
 
+<p align="center">
+  <img src="images/t66.jpg" alt="Boot" width="55%">
+</p>
+
 So I decided to buy **two models** to test them hands-on:
 
 - 🟢 **Walnut Pi 1B** — the budget-friendly entry-level option
@@ -101,6 +105,10 @@ sudo nmcli dev wifi connect XXXXX password XXXXX
 ```
 
 And just like that, it connected without any problems. After that, I could connect via **SSH** to take a look at the system.
+
+<p align="center">
+  <img src="images/t55.jpg" alt="Boot" width="55%">
+</p>
 
 ### 🖥️ System Info
 
