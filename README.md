@@ -572,7 +572,33 @@ done
 
 ### 🧪 The Experiment
 
-With the script running, I booted up **my two Walnut Pi boards** — both connected from **Mexico**, both without any VPN.
+With the script running, I booted up **my Walnut Pi board** — connected from **Mexico**, both without any VPN.
 
-And then I waited. 👀
+And then I waited.
+
+### 📊 The Monitoring Log
+
+After a few minutes — **many, actually** — the USA counter ticked up:
+
+```
+2026-09-23 15:58:17  USA=3
+2026-09-23 15:58:48  USA=3
+2026-09-23 15:59:19  USA=3
+2026-09-23 15:59:50  USA=3
+2026-09-23 16:00:21  USA=3
+2026-09-23 16:00:52  USA=3
+2026-09-23 16:01:23  USA=3
+2026-09-23 16:01:54  USA=3
+2026-09-23 16:02:25  USA=4
+[2026-09-23 16:02:25] >>> USA: 3 -> 4
+2026-09-23 16:02:56  USA=4
+2026-09-23 16:03:27  USA=4
+2026-09-23 16:03:58  USA=4
+2026-09-23 16:04:29  USA=4
+2026-09-23 16:05:00  USA=4
+```
+
+### 🎯 Result
+
+**The counter went from 3 to 4** — right after booting up my Mexican Walnut Pi board. 🇲🇽➡️🇺🇸
 
