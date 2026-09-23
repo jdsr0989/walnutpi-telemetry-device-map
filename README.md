@@ -36,7 +36,6 @@ So I decided to buy **two models** to test them hands-on:
 | **Power** | USB Type-C, 5V/1A |
 | **Operating Systems** | Walnut Pi OS (Debian) · Ubuntu 22.04 · Home Assistant · Android |
 
-
 ---
 
 ## 🔵 Walnut Pi 2B — Specifications
@@ -70,10 +69,18 @@ To my surprise, **my Mexican phone number was accepted** for registration — no
 
 After that, I installed the **Baidu Netdisk client** on my **Arch Linux** machine, and from there I downloaded the images. The transfer took **longer than expected**, but it completed without any issues.
 
-
 <p align="center">
   <img src="images/t33.jpg" alt="Baidu Netdisk Download" width="65%">
 </p>
 
-
 ---
+
+## 💾 Flashing the Image
+
+Once the images are downloaded, all that's left is to flash them. On Linux, I did it with `dd`:
+
+```bash
+dd if=2026-2-2_V1.7.0_WalnutPi-2B_5.15.147_debian12_server.img of=/dev/sdb bs=4M status=progress
+```
+
+And that's it — the next step is booting up. 🚀
