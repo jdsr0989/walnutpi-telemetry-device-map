@@ -8,15 +8,17 @@ While browsing **AliExpress** in search of affordable Chinese alternatives to th
 
 So I decided to buy **two models** to test them hands-on:
 
-- 🟢 **Walnut Pi 1** — the budget-friendly entry-level option
-- 🔵 **Walnut Pi 2** — the more powerful, feature-packed version
-
+- 🟢 **Walnut Pi 1B** — the budget-friendly entry-level option
+- 🔵 **Walnut Pi 2B** — the more powerful, feature-packed version
 
 ---
+
 <p align="center">
   <img src="images/t11.jpg" alt="Walnut Pi unboxing — package arrival" width="45%">
   <img src="images/t22.jpg" alt="Walnut Pi unboxing — boards inside" width="45%">
 </p>
+
+---
 
 ## 🟢 Walnut Pi 1B — Specifications
 
@@ -57,3 +59,16 @@ So I decided to buy **two models** to test them hands-on:
 | **Power** | USB Type-C 5V @ 2A · PoE (Power over Ethernet) |
 | **Operating Systems** | Walnut Pi OS (Debian) · Ubuntu · Android · Home Assistant |
 
+---
+
+## ⬇️ Downloading the OS Images
+
+Alright, time to get to work. From the official wiki — [https://wiki.walnutpi.com/en/docs/walnutpi_1/intro/download](https://wiki.walnutpi.com/en/docs/walnutpi_1/intro/download) — you can download the OS images that need to be flashed onto a MicroSD card.
+
+There's a dedicated section for **users outside of China**, but I was curious and wanted to try the procedure for downloading directly from **Baidu** (the "Chinese Google").
+
+To my surprise, **my Mexican phone number was accepted** for registration — no region blocks, no workarounds needed. 🎉
+
+After that, I installed the **Baidu Netdisk client** on my **Arch Linux** machine, and from there I downloaded the images. The transfer took **longer than expected**, but it completed without any issues.
+
+---
