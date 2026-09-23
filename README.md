@@ -250,6 +250,3 @@ The GPIO header is fully **Raspberry Pi-compatible**, with I2C, SPI, UART, and p
 
 ---
 
-
-  <i>Made with 🥜 from Mexico</i>
-</p>
