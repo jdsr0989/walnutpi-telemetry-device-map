@@ -13,7 +13,10 @@ So I decided to buy **two models** to test them hands-on:
 
 
 ---
-
+<p align="center">
+  <img src="images/t11.jpg" alt="Walnut Pi unboxing — package arrival" width="45%">
+  <img src="images/t22.jpg" alt="Walnut Pi unboxing — boards inside" width="45%">
+</p>
 
 ## 🟢 Walnut Pi 1 — Specifications
 
