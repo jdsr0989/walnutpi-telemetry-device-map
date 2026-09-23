@@ -578,7 +578,7 @@ And then I waited.
 
 ### 📊 The Monitoring Log
 
-After a few minutes — **many, actually** — the USA counter ticked up:
+After some minutes the USA counter ticked up:
 
 ```
 2026-09-23 15:58:17  USA=3
