@@ -18,7 +18,7 @@ So I decided to buy **two models** to test them hands-on:
   <img src="images/t22.jpg" alt="Walnut Pi unboxing — boards inside" width="45%">
 </p>
 
-## 🟢 Walnut Pi 1 — Specifications
+## 🟢 Walnut Pi 1B — Specifications
 
 | Component | Specifications |
 |---|---|
@@ -38,7 +38,7 @@ So I decided to buy **two models** to test them hands-on:
 
 ---
 
-## 🔵 Walnut Pi 2 — Specifications
+## 🔵 Walnut Pi 2B — Specifications
 
 | Component | Specifications |
 |---|---|
